@@ -6,7 +6,7 @@ public class TargetScript : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("laser"))
+        if (other.CompareTag("Laser"))
         {
             Debug.Log("Laser Hit Target!");
         }

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 465277103}
   m_Layer: 0
   m_Name: Laser
-  m_TagString: Untagged
+  m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12f5592558b3d64aa584a2c5cdc60a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 0}
+  lineRenderer: {fileID: 465277104}
   RotationSpeed: 20
   laserSpeed: 5
   maxReflections: 5
@@ -208,8 +208,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.5
+        value: 0.31176758
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -506,8 +506,8 @@ GameObject:
   - component: {fileID: 985084001}
   - component: {fileID: 985084000}
   m_Layer: 0
-  m_Name: Square
-  m_TagString: Untagged
+  m_Name: Mirror
+  m_TagString: mirror
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -636,7 +636,7 @@ GameObject:
   - component: {fileID: 1560023373}
   m_Layer: 0
   m_Name: Target
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

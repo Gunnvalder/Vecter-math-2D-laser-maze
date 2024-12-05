@@ -1,44 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class LaserManager : MonoBehaviour
 {
-    public LineRenderer lineRenderer;
+    public LineRenderer laser;
     public float RotationSpeed = 20f;
-    public float laserSpeed = 10f;
-    public int maxReflections = 5;
 
-    private Vector2 direction;
+    Vector2 dir, pos;
 
-    private void Start()
-    {
-        direction = transform.up;
-        lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, transform.position);
-    }
+    GameObject LaserObj;
+    List<Vector2> laserIndices = new List<Vector2>();
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(0, 0, RotationSpeed * Time.deltaTime);
+            transform.Rotate(0, 0, 20 * Time.deltaTime);
         }
 
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(0, 0, -RotationSpeed * Time.deltaTime);
+            transform.Rotate(0, 0, -20 * Time.deltaTime);
         }
-
-        UpdateLaserPath();
     }
 
-    void UpdateLaserPath()
+    public LaserBeam(Vector2 pos, Vector2 dir, Material material)
     {
-        Vector2 laserStart = (Vector2)transform.position;
-        Vector2 laserEnd = laserStart + direction * laserSpeed;
+        this.laser = new LineRenderer();
+        this.LaserObj = new GameObject();
+        this.LaserObj.name = "Laser";
+        this.pos = pos;
+        this.dir = dir;
+
+        this.laser = this.LaserObj.AddComponent(typeof(LineRenderer)) as LineRenderer;
+        this.laser.startWidth = 0.5f;
+        this.laser.endWidth = 0.5f;
+        this.laser.material = material;
+        this.laser.startColor = Color.green;
+        this.laser.endColor = Color.red;
     }
+
+
 }

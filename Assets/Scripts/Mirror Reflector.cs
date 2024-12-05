@@ -18,7 +18,7 @@ public class MirrorReflector : MonoBehaviour
 
                 Vector2 ReflectionDirection = Vector2.Reflect(IncomingDirection, MirrorNormal);
 
-                //laser.SetDirection(ReflectionDirection);
+                laser.SetDirection(ReflectionDirection);
             }
         }
     }
