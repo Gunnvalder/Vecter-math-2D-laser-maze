@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class LaserManager : MonoBehaviour
+public class LaserBeam : MonoBehaviour
 {
     public LineRenderer laser;
     public float RotationSpeed = 20f;
@@ -44,6 +42,4 @@ public class LaserManager : MonoBehaviour
         this.laser.startColor = Color.green;
         this.laser.endColor = Color.red;
     }
-
-
 }
