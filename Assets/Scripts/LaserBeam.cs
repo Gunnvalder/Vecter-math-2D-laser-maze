@@ -24,7 +24,7 @@ public class LaserBeam
         this.laser.endWidth = 0.1f;
         this.laser.material = material;
         this.laser.startColor = Color.green;
-        this.laser.endColor = Color.red;
+        this.laser.endColor = Color.green;
 
         CastRay(pos, dir, laser);
     }
@@ -38,8 +38,7 @@ public class LaserBeam
 
         if (Physics.Raycast(ray, out hit, 30,1))
         {
-            laserIndices.Add(hit.point);
-            UpdateLaser();
+            CheckHit(hit, dir, laser);
         }
         else
         {
@@ -57,6 +56,22 @@ public class LaserBeam
         {
             laser.SetPosition(count, idx);
             count++;
+        }
+    }
+
+    void CheckHit(RaycastHit hitInfo, Vector2 direction, LineRenderer laser)
+    {
+        if (hitInfo.collider.gameObject.tag == "mirror")
+        {
+            Vector2 pos = hitInfo.point;
+            Vector2 dir = Vector2.Reflect(direction, hitInfo.normal);
+
+            CastRay(pos, dir, laser);
+        }
+        else
+        {
+            laserIndices.Add(hitInfo.point);
+            UpdateLaser();
         }
     }
 }
