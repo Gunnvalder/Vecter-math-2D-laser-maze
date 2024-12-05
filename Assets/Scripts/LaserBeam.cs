@@ -2,30 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserBeam : MonoBehaviour
+public class LaserBeam 
 {
-    public LineRenderer laser;
-    public float RotationSpeed = 20f;
 
     Vector2 dir, pos;
 
     GameObject LaserObj;
+    LineRenderer laser;
     List<Vector2> laserIndices = new List<Vector2>();
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(0, 0, 20 * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(0, 0, -20 * Time.deltaTime);
-        }
-    }
 
     public LaserBeam(Vector2 pos, Vector2 dir, Material material)
     {
@@ -36,10 +20,43 @@ public class LaserBeam : MonoBehaviour
         this.dir = dir;
 
         this.laser = this.LaserObj.AddComponent(typeof(LineRenderer)) as LineRenderer;
-        this.laser.startWidth = 0.5f;
-        this.laser.endWidth = 0.5f;
+        this.laser.startWidth = 0.1f;
+        this.laser.endWidth = 0.1f;
         this.laser.material = material;
         this.laser.startColor = Color.green;
         this.laser.endColor = Color.red;
+
+        CastRay(pos, dir, laser);
+    }
+
+    void CastRay(Vector2 pos, Vector2 dir, LineRenderer laser)
+    {
+        laserIndices.Add(pos);
+
+        Ray ray = new Ray(pos, dir);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 30,1))
+        {
+            laserIndices.Add(hit.point);
+            UpdateLaser();
+        }
+        else
+        {
+            laserIndices.Add(ray.GetPoint(30));
+            UpdateLaser();
+        }
+    }
+
+    private void UpdateLaser()
+    {
+        int count = 0;
+        laser.positionCount = laserIndices.Count;
+
+        foreach (Vector2 idx in laserIndices)
+        {
+            laser.SetPosition(count, idx);
+            count++;
+        }
     }
 }

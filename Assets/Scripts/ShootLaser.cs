@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class ShootLaser : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Material material;
+    LaserBeam beam;
 
     // Update is called once per frame
     void Update()
     {
-        
+        Destroy(GameObject.Find("Laser"));
+        beam = new LaserBeam(gameObject.transform.position, gameObject.transform.right, material);
     }
 }
