@@ -4,32 +4,29 @@ using UnityEngine;
 
 public class LaserBeam 
 {
-
     Vector2 dir, pos;
 
     GameObject LaserObj;
     LineRenderer laser;
     List<Vector2> laserIndices = new List<Vector2>();
 
-    public LaserBeam(Vector2 pos, Vector2 dir, Material material)
+    public LaserBeam(Vector2 startPos, Vector2 startDir, Material laserMaterial, float maxRange = 30f)
     {
-        this.laser = new LineRenderer();
-        this.LaserObj = new GameObject();
-        this.LaserObj.name = "Laser";
-        this.pos = pos;
-        this.dir = dir;
-
-        this.laser = this.LaserObj.AddComponent(typeof(LineRenderer)) as LineRenderer;
+        this.LaserObj = new GameObject("Laser");
+        this.laser = this.LaserObj.AddComponent<LineRenderer>();
         this.laser.startWidth = 0.1f;
         this.laser.endWidth = 0.1f;
-        this.laser.material = material;
+        this.laser.material = laserMaterial;
         this.laser.startColor = Color.green;
         this.laser.endColor = Color.green;
 
-        CastRay(pos, dir, laser);
+        this.pos = startPos;
+        this.dir = startDir;
+
+        CastRay(startPos, startDir, laser);
     }
 
-    void CastRay(Vector2 pos, Vector2 dir, LineRenderer laser)
+    void CastRay(Vector2 StartPos, Vector2 StartDir, LineRenderer laser)
     {
         laserIndices.Add(pos);
 
@@ -56,22 +53,6 @@ public class LaserBeam
         {
             laser.SetPosition(count, idx);
             count++;
-        }
-    }
-
-    void CheckHit(RaycastHit hitInfo, Vector2 direction, LineRenderer laser)
-    {
-        if (hitInfo.collider.gameObject.tag == "mirror")
-        {
-            Vector2 pos = hitInfo.point;
-            Vector2 dir = Vector2.Reflect(direction, hitInfo.normal);
-
-            CastRay(pos, dir, laser);
-        }
-        else
-        {
-            laserIndices.Add(hitInfo.point);
-            UpdateLaser();
         }
     }
 }
